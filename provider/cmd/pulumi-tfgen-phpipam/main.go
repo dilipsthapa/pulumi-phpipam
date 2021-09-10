@@ -21,5 +21,5 @@ import (
 )
 
 func main() {
-	tfgen.Main("ipam", version.Version, ipam.Provider())
+	tfgen.Main("phpipam", version.Version, phpipam.Provider())
 }
