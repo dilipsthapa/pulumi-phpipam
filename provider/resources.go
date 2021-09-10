@@ -53,7 +53,7 @@ func Provider() tfbridge.ProviderInfo {
 		Name:        "terraform-provider-phpipam",
 		GitHubOrg:   "lord-kyron",
 		Description: "A Pulumi package for creating phpipam resources.",
-		Keywords:    []string{"pulumi", "ipam"},
+		Keywords:    []string{"pulumi", "phpipam"},
 		Homepage:    "https://pulumi.io",
 		License:     "Apache-2.0",
 		Repository:  "https://github.com/lord-kyron/terraform-provider-phpipam",
@@ -123,7 +123,7 @@ func Provider() tfbridge.ProviderInfo {
 
 	// For all resources with name properties, we will add an auto-name property.  Make sure to skip those that
 	// already have a name mapping entry, since those may have custom overrides set above (e.g., for length).
-	const ipamName = "name"
+	const ipamName = "phpipam"
 	for resname, res := range prov.Resources {
 		if schema := p.ResourcesMap[resname]; schema != nil {
 			// Only apply auto-name to input properties (Optional || Required) named `name`
