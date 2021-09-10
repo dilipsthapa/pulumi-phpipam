@@ -15,15 +15,8 @@
 package phpipam
 
 import (
-	"fmt"
-	"path/filepath"
 	"unicode"
-	"github.com/dilipsthapa/pulumi-phpipam/provider/pkg/version"
-	shim "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim"
-	shimv1 "github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfshim/sdk-v1"
-	"github.com/pulumi/pulumi/sdk/v3/go/common/resource"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
-	"github.com/lord-kyron/terraform-provider-phpipam/plugin/providers/phpipam"
 )
 
 // all of the Enterprise Cloud token components used below.
