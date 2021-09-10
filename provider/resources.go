@@ -17,6 +17,7 @@ package phpipam
 import (
 	"unicode"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
+	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 )
 
 // all of the Enterprise Cloud token components used below.
