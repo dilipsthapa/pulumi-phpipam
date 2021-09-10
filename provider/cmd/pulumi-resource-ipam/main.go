@@ -15,8 +15,8 @@
 package main
 
 import (
-	ipam "github.com/dilipsthapa/pulumi-ipam/provider"
-	"github.com/dilipsthapa/pulumi-ipam/pkg/version"
+	ipam "github.com/dilipsthapa/pulumi-phpipam/provider"
+	"github.com/dilipsthapa/pulumi-phpipam/pkg/version"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
 )
 
