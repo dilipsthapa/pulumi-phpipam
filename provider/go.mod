@@ -1,4 +1,4 @@
-module github.com/dilipsthapa/pulumi-phpipam
+module github.com/dilipsthapa/pulumi-phpipam/provider
 
 go 1.16
 
