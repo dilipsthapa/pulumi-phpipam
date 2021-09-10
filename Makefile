@@ -1,6 +1,6 @@
-PROJECT_NAME := ipam Package
+PROJECT_NAME := phpipam Package
 
-PACK             := ipam
+PACK             := phpipam
 ORG              := dilipsthapa
 PROJECT          := github.com/${ORG}/pulumi-${PACK}
 NODE_MODULE_NAME := @pulumi/${PACK}

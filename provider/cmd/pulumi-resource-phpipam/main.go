@@ -21,5 +21,5 @@ import (
 )
 
 func main() {
-	tfbridge.Main("ipam", version.Version, ipam.Provider())
+	tfbridge.Main("phpipam", version.Version, phpipam.Provider())
 }
