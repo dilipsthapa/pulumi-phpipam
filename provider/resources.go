@@ -18,6 +18,7 @@ import (
 	"unicode"
 	"github.com/pulumi/pulumi/sdk/v3/go/common/tokens"
 	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
+	"https://github.com/lord-kyron/terraform-provider-phpipam/plugin/providers/phpipam"
 )
 
 // all of the Enterprise Cloud token components used below.
@@ -46,7 +47,7 @@ func ipamResource(mod string, res string) tokens.Type {
 
 // Provider returns additional overlaid schema and metadata associated with the ipam package.
 func Provider() tfbridge.ProviderInfo {
-	p := ipam.Provider().(*schema.Provider)
+	p := phpipam.Provider().(*schema.Provider)
 
 	prov := tfbridge.ProviderInfo{
 		P:           p,
@@ -80,7 +81,7 @@ func Provider() tfbridge.ProviderInfo {
 			},
 			"Insecure": {
 				Default: &tfbridge.DefaultInfo{
-					EnvVars: []bool{false},
+					EnvVars: []string{"false"},
 				},
 			},
 		},
@@ -109,35 +110,32 @@ func Provider() tfbridge.ProviderInfo {
 			Dependencies: map[string]string{
 				"@pulumi/pulumi": "^0.17.0",
 			},
-			Overlay: &tfbridge.OverlayInfo{
-				Files:   []string{},
-				Modules: map[string]*tfbridge.OverlayInfo{},
-			},
 		},
 		Python: &tfbridge.PythonInfo{
+			// List any Python dependencies and their version ranges
 			Requires: map[string]string{
-				"pulumi": ">=0.17.0,<0.18.0",
+				"pulumi": ">=3.0.0,<4.0.0",
+			},
+		},
+		Golang: &tfbridge.GolangInfo{
+			ImportBasePath: filepath.Join(
+				fmt.Sprintf("github.com/pulumi/pulumi-%[1]s/sdk/", mainPkg),
+				tfbridge.GetModuleMajorVersion(version.Version),
+				"go",
+				mainPkg,
+			),
+			GenerateResourceContainerTypes: true,
+		},
+		CSharp: &tfbridge.CSharpInfo{
+			PackageReferences: map[string]string{
+				"Pulumi":                       "3.*",
+				"System.Collections.Immutable": "1.6.0",
 			},
 		},
 	}
 
 	// For all resources with name properties, we will add an auto-name property.  Make sure to skip those that
-	// already have a name mapping entry, since those may have custom overrides set above (e.g., for length).
-	const ipamName = "phpipam"
-	for resname, res := range prov.Resources {
-		if schema := p.ResourcesMap[resname]; schema != nil {
-			// Only apply auto-name to input properties (Optional || Required) named `name`
-			if tfs, has := schema.Schema[ipamName]; has && (tfs.Optional || tfs.Required) {
-				if _, hasfield := res.Fields[ipamName]; !hasfield {
-					if res.Fields == nil {
-						res.Fields = make(map[string]*tfbridge.SchemaInfo)
-					}
-					// Use conservative options that apply broadly for Enterprise Cloud.
-					res.Fields[ipamName] = tfbridge.AutoName(ipamName, 255)
-				}
-			}
-		}
-	}
-
+	// already have a name mapping entry, since those may have custom overrides set above (e
+	prov.SetAutonaming(255, "-")
 	return prov
 }
